@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # Social Jukebox (QUp) ↯
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -73,8 +71,4 @@ This project was developed as an **academic exercise** for the **Department of D
 
 ---
 
-# _© 2026 QUp Inc. All Rights Reserved._
-
-# jukebox_mockapp
-
-> > > > > > > 1e14ea901b6230b3bb5c64e83ddeee77fb251f4b
+_© 2026 QUp Inc. All Rights Reserved._
