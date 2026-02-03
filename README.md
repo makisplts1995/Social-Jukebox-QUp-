@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+
 # Social Jukebox (QUp) ↯
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -56,10 +58,10 @@ To run the application locally:
 
 ## 👥 Contributors
 
-- **me25045**
-- **me25054**
-- **me25081**
-- **me25095**
+- **BAIRAKTARIDOU MARIA** [ AM: me25045 ]
+- **DAREMA THEANO** [ AM: me25054 ]
+- **PLATIS** [ AM: me25081 ]
+- **HAHOULIS VASILIS** [ AM: me25095 ]
 
 ---
 
@@ -71,4 +73,8 @@ This project was developed as an **academic exercise** for the **Department of D
 
 ---
 
-_© 2026 QUp Inc. All Rights Reserved._
+# _© 2026 QUp Inc. All Rights Reserved._
+
+# jukebox_mockapp
+
+> > > > > > > 1e14ea901b6230b3bb5c64e83ddeee77fb251f4b
