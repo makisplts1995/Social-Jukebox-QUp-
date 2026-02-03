@@ -58,7 +58,7 @@ To run the application locally:
 
 - **BAIRAKTARIDOU MARIA** [ AM: me25045 ]
 - **DAREMA THEANO** [ AM: me25054 ]
-- **PLATIS** [ AM: me25081 ]
+- **PLATIS GERASIMOS** [ AM: me25081 ]
 - **HAHOULIS VASILIS** [ AM: me25095 ]
 
 ---
