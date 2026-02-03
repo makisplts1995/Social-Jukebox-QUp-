@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Jukebox Mock</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="app-container">
+        
+        <!-- =========================
+             0. ΑΡΧΙΚΗ ΣΕΛΙΔΑ - LANDING (ΕΠΙΛΟΓΗ ΡΟΛΟΥ)
+             ========================= -->
+        <div id="START" class="screen active" style="align-items: center; justify-content: center;">
+            <div class="text-center" style="margin-bottom: 40px;">
+                <h1 class="brand-logo" style="font-size: 52px; margin-bottom: 10px;">
+                    QUp<span class="brand-arrow">↯</span>
+                </h1>
+                <p>Social Jukebox Platform</p>
+            </div>
+            
+            <div style="width: 100%;">
+                <button class="btn btn-guest" onclick="navigateTo('JK_G_SCAN')">
+                    <i class="fa-solid fa-user"></i> Guest / Visitor
+                </button>
+                <button class="btn btn-host" onclick="openLogin('host')">
+                    <i class="fa-solid fa-star"></i> Host / Owner
+                </button>
+
+            </div>
+            
+            <div style="position: absolute; bottom: 30px; display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%;">
+                <button class="btn btn-admin" style="width: auto; padding: 5px 15px; font-size: 11px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; margin: 0; background: transparent; border: 1px solid var(--admin-color);" onclick="openLogin('admin')">
+                    <i class="fa-solid fa-lock" style="margin-right: 5px;"></i> Admin
+                </button>
+                <p style="font-size: 10px; opacity: 0.3; margin: 0;">Prototype v1.0</p>
+            </div>
+        </div>
+
+
+
+        <!-- =========================
+             0b. ΟΘΟΝΗ ΣΥΝΔΕΣΗΣ - LOGIN (ΚΟΙΝΗ)
+             ========================= -->
+        <div id="JK_LOGIN" class="screen" style="align-items: center; justify-content: center;">
+            <div class="card" style="width: 320px; padding: 40px; text-align: center;">
+                <h2 style="margin-bottom: 5px;">Welcome Back</h2>
+                <p style="margin-bottom: 25px; font-size: 14px;">Please sign in to continue.</p>
+                
+                <div style="text-align: left;">
+                    <label style="font-size: 12px; font-weight: bold; margin-bottom: 5px; display: block;">Username</label>
+                    <input type="text" id="login-user" class="input-field" placeholder="Type 'admin' or just click Sign In">
+                    
+                    <label style="font-size: 12px; font-weight: bold; margin-bottom: 5px; display: block;">Password</label>
+                    <input type="password" id="login-pass" class="input-field" placeholder="(Optional for Mock)">
+                </div>
+                
+                <button class="btn btn-primary" style="margin-top: 10px; color:black;" onclick="handleLogin()">Sign In</button>
+                <button class="btn" style="border: none; background: transparent; color: #999; margin-top: 10px;" onclick="navigateTo('START')">Cancel</button>
+            </div>
+        </div>
+
+        <!-- =========================
+             1. ΡΟΗ ΕΠΙΣΚΕΠΤΗ (VISITOR FLOW)
+             ========================= -->
+        
+        <!-- G1: Σάρωση (Scan) -->
+        <div id="JK_G_SCAN" class="screen" style="justify-content: center; align-items: center; text-align: center;">
+             <i class="fa-solid fa-qrcode" style="font-size: 150px; margin-bottom: 30px; color: #333;"></i>
+             <h2>Scan to Qup</h2>
+             <button class="btn btn-guest" style="width: 200px;" onclick="navigateTo('JK_G_HUB')">Simulate Scan</button>
+             <button class="btn" style="margin-top: 20px; border: none;" onclick="navigateTo('START')">Back</button>
+        </div>
+
+        <!-- G2: Κέντρο Επισκέπτη (Guest Hub - Ψηφοφορία/Αναζήτηση) -->
+        <div id="JK_G_HUB" class="screen fixed-flex">
+            <!-- Fixed Header -->
+            <div style="flex-shrink: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                    <h2 style="border: none; margin: 0;">My Cool Party</h2>
+                    <div onclick="toggleQR(true)" style="cursor: pointer; display: flex; align-items: center; gap: 5px; color: var(--guest-color);">
+                        <span style="font-size: 12px; font-weight: bold;">Share</span>
+                        <i class="fa-solid fa-qrcode" style="font-size: 20px;"></i>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn btn-primary btn-guest" style="flex: 1;" onclick="switchGuestTab('search')">Request</button>
+                    <button class="btn" style="flex: 1;" onclick="switchGuestTab('queue')">Up Next</button>
+                </div>
+            </div>
+
+            <!-- Scrollable Content Area -->
+            <div class="scroll-content">
+                <div id="guest-search-tab">
+                    <input type="text" class="input-field" placeholder="Search to Qup...">
+                    
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3>Cruel Summer</h3>
+                            <p>Taylor Swift</p>
+                        </div>
+                        <button class="btn btn-guest" style="width: auto; padding: 8px 20px; margin: 0; font-size: 14px;" onclick="requestSong('Cruel Summer', 'Taylor Swift')">QUp it <span class="brand-arrow" style="font-size: 1.2em;">↯</span></button>
+                    </div>
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3>Anti-Hero</h3>
+                            <p>Taylor Swift</p>
+                        </div>
+                        <button class="btn btn-guest" style="width: auto; padding: 8px 20px; margin: 0; font-size: 14px;" onclick="requestSong('Anti-Hero', 'Taylor Swift')">QUp it <span class="brand-arrow" style="font-size: 1.2em;">↯</span></button>
+                    </div>
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3>Blinding Lights</h3>
+                            <p>The Weeknd</p>
+                        </div>
+                        <button class="btn btn-guest" style="width: auto; padding: 8px 20px; margin: 0; font-size: 14px;" onclick="requestSong('Blinding Lights', 'The Weeknd')">QUp it <span class="brand-arrow" style="font-size: 1.2em;">↯</span></button>
+                    </div>
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3>Levitating</h3>
+                            <p>Dua Lipa</p>
+                        </div>
+                        <button class="btn btn-guest" style="width: auto; padding: 8px 20px; margin: 0; font-size: 14px;" onclick="requestSong('Levitating', 'Dua Lipa')">QUp it <span class="brand-arrow" style="font-size: 1.2em;">↯</span></button>
+                    </div>
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3>As It Was</h3>
+                            <p>Harry Styles</p>
+                        </div>
+                        <button class="btn btn-guest" style="width: auto; padding: 8px 20px; margin: 0; font-size: 14px;" onclick="requestSong('As It Was', 'Harry Styles')">QUp it <span class="brand-arrow" style="font-size: 1.2em;">↯</span></button>
+                    </div>
+                </div>
+
+
+
+                <div id="guest-queue-tab" style="display: none;">
+                    <h3>Up Next</h3>
+                    <p style="font-size: 12px; margin-bottom: 15px;">Vote to boost songs to the top!</p>
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 20px; font-weight: bold; color: #999;">1</span>
+                            <div><h3>Love Story</h3><p>Taylor Swift</p></div>
+                        </div>
+                        <div class="text-center">
+                            <span class="brand-arrow" style="cursor: pointer; font-size: 24px;" onclick="showToast('QUp Vote +1 ↯')">↯</span>
+                            <div style="font-weight: bold;">13</div>
+                        </div>
+                    </div>
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 20px; font-weight: bold; color: #999;">2</span>
+                            <div><h3>Shake It Off</h3><p>Taylor Swift</p></div>
+                        </div>
+                        <div class="text-center">
+                            <span class="brand-arrow" style="cursor: pointer; font-size: 24px; filter: grayscale(1);" onclick="showToast('QUp Vote +1 ↯')">↯</span>
+                            <div style="font-weight: bold;">8</div>
+                        </div>
+                    </div>
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 20px; font-weight: bold; color: #999;">3</span>
+                            <div><h3>Starboy</h3><p>The Weeknd</p></div>
+                        </div>
+                        <div class="text-center">
+                            <span class="brand-arrow" style="cursor: pointer; font-size: 24px; filter: grayscale(1);" onclick="showToast('QUp Vote +1 ↯')">↯</span>
+                            <div style="font-weight: bold;">7</div>
+                        </div>
+                    </div>
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 20px; font-weight: bold; color: #999;">4</span>
+                            <div><h3>Do I Wanna Know?</h3><p>Arctic Monkeys</p></div>
+                        </div>
+                        <div class="text-center">
+                            <span class="brand-arrow" style="cursor: pointer; font-size: 24px; filter: grayscale(1);" onclick="showToast('QUp Vote +1 ↯')">↯</span>
+                            <div style="font-weight: bold;">6</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dummy Content to Force Scroll for Testing -->
+                    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 20px; font-weight: bold; color: #999;">5</span>
+                            <div><h3>Blank Space</h3><p>Taylor Swift</p></div>
+                        </div>
+                        <div class="text-center">
+                            <span class="brand-arrow" style="cursor: pointer; font-size: 24px; filter: grayscale(1);" onclick="showToast('QUp Vote +1 ↯')">↯</span>
+                            <div style="font-weight: bold;">5</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fixed Mini Player Bar (Μπάρα Αναπαραγωγής) -->
+            <div class="card" style="margin-bottom: 20px; background: rgba(20, 20, 35, 0.95); border-top: 1px solid var(--border-color); color: white; cursor: pointer; flex-shrink: 0; width: 100%; position: relative; z-index: 10;" onclick="navigateTo('JK_G_PLAYER')">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="font-size: 10px; color: var(--guest-color); font-weight: bold; letter-spacing: 1px;">NOW PLAYING</span>
+                        <div style="font-weight: bold;">Cruel Summer</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                         <div class="equalizer" style="height: 15px; margin: 0; gap: 2px;">
+                            <div class="bar" style="width: 3px;"></div>
+                            <div class="bar" style="width: 3px;"></div>
+                            <div class="bar" style="width: 3px;"></div>
+                         </div>
+                         <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- G3: Player Επισκέπτη -->
+        <div id="JK_G_PLAYER" class="screen" style="text-align: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <button class="btn" style="width: auto; border: none; background: transparent;" onclick="navigateTo('JK_G_HUB')">
+                    <span class="brand-arrow" style="font-size: 20px;">↯</span>
+                </button>
+                <span>Now Playing</span>
+                <button class="btn" style="width: auto; border: none; background: transparent; color: red;" onclick="navigateTo('JK_G_EXIT')">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+
+            <div style="width: 200px; height: 200px; background: #ddd; margin: 20px auto; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-music" style="font-size: 50px; color: #999;"></i>
+            </div>
+
+            <h2>Cruel Summer</h2>
+            <p>Taylor Swift</p>
+            
+            <div style="margin-top: 40px;">
+                <div style="height: 4px; background: #ddd; border-radius: 2px;">
+                    <div style="width: 60%; height: 100%; background: var(--guest-color);"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-top: 5px; color: #999;">
+                    <span>1:58</span>
+                    <span>2:58</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                 <p>Synced with Host <i class="fa-solid fa-link" style="color: green;"></i></p>
+            </div>
+        </div>
+
+        <!-- G4: Έξοδος Επισκέπτη (Exit) -->
+        <div id="JK_G_EXIT" class="screen" style="justify-content: center; align-items: center; text-align: center;">
+            <h2 style="border: none;">Leaving Session?</h2>
+            <p>Don't stop the Qup...</p>
+            
+            <div style="margin-top: 30px; width: 100%;">
+                <button class="btn btn-guest" onclick="navigateTo('JK_G_SCAN')">Scan New QR</button>
+                <button class="btn" onclick="navigateTo('START')">Close / Exit App</button>
+                <button class="btn" style="border: none; margin-top: 20px; color: #999;" onclick="navigateTo('JK_G_PLAYER')">Cancel</button>
+            </div>
+        </div>
+
+        <!-- =========================
+             2. ΡΟΗ ΟΙΚΟΔΕΣΠΟΤΗ (HOST FLOW - DESKTOP VIEW)
+             ========================= -->
+        
+        <!-- H0: Αρχική Οικοδεσπότη (Host Home) -->
+        <div id="JK_H_HOME" class="screen" style="align-items: center; justify-content: center;">
+            <div class="text-center">
+                <h1 class="brand-logo" style="font-size: 42px; margin-bottom: 30px;">
+                    QUp<span class="brand-arrow">↯</span>
+                </h1>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 600px;">
+                    <!-- New Party -->
+                    <div class="card" style="cursor: pointer; transition: transform 0.2s; padding: 40px 20px;" onclick="navigateTo('JK_H_SETUP')">
+                        <i class="fa-solid fa-plus-circle" style="font-size: 50px; color: var(--host-color); margin-bottom: 20px;"></i>
+                        <h3>New Session</h3>
+                        <p style="font-size: 14px; opacity: 0.7;">Start a fresh Qup party</p>
+                    </div>
+
+                    <!-- Stats / History -->
+                    <div class="card" style="cursor: pointer; transition: transform 0.2s; padding: 40px 20px;" onclick="navigateTo('JK_H_STATS')">
+                        <i class="fa-solid fa-chart-pie" style="font-size: 50px; color: var(--guest-color); margin-bottom: 20px;"></i>
+                        <h3>My Stats</h3>
+                        <p style="font-size: 14px; opacity: 0.7;">View past vibes & data</p>
+                    </div>
+                </div>
+                
+                <button class="btn" style="width: 200px; margin-top: 40px; border: none;" onclick="navigateTo('START')">Logout</button>
+            </div>
+        </div>
+
+        <!-- H0b: Στατιστικά Οικοδεσπότη (Host Stats) -->
+        <div id="JK_H_STATS" class="screen">
+            <div class="desktop-layout">
+                <!-- Sidebar (reuse style) -->
+                <div class="sidebar">
+                    <h2 class="brand-logo" style="font-size: 24px;">QUp<span class="brand-arrow">↯</span> <small>Stats</small></h2>
+                    <div class="mt-auto">
+                        <button class="btn" onclick="navigateTo('JK_H_HOME')">Back to Home</button>
+                    </div>
+                </div>
+                
+                <div class="main-content">
+                    <h1>Your Qup History</h1>
+                    
+                    <!-- KPI Cards -->
+                    <div class="stats-grid" style="margin-top: 20px;">
+                        <div class="stat-box">
+                            <span class="stat-number">12</span>
+                            <small>Parties Hosted</small>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number" style="color: var(--host-color);">842</span>
+                            <small>Songs Played</small>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number" style="color: var(--guest-color);">4.8h</span>
+                            <small>Avg Duration</small>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number" style="color: #ffaa00;">98%</span>
+                            <small>Vibe Score</small>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 30px;">
+                        <!-- Vibe Chart (Mock) -->
+                        <div class="card">
+                            <h3>Vibe History (Last 5 Sessions)</h3>
+                            <div style="display: flex; align-items: flex-end; justify-content: space-between; height: 150px; padding: 20px; gap: 10px;">
+                                <div style="width: 15%; background: rgba(0,243,255,0.2); height: 40%; border-radius: 4px; position: relative;">
+                                    <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 10px;">Oct 12</span>
+                                </div>
+                                <div style="width: 15%; background: rgba(0,243,255,0.4); height: 60%; border-radius: 4px; position: relative;">
+                                    <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 10px;">Oct 19</span>
+                                </div>
+                                <div style="width: 15%; background: rgba(217,70,239,0.5); height: 50%; border-radius: 4px; position: relative;">
+                                    <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 10px;">Oct 26</span>
+                                </div>
+                                <div style="width: 15%; background: rgba(217,70,239,0.8); height: 85%; border-radius: 4px; position: relative;">
+                                    <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 10px;">Nov 02</span>
+                                </div>
+                                <div style="width: 15%; background: #d946ef; height: 95%; border-radius: 4px; position: relative; box-shadow: 0 0 15px var(--host-color);">
+                                    <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: var(--host-color);">Nov 09</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top Songs -->
+                        <div class="card">
+                            <h3>Crowd Favorites</h3>
+                            <div style="font-size: 14px; display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>1. Cruel Summer</span>
+                                    <span style="color: var(--host-color);">42 plays</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>2. Mr. Brightside</span>
+                                    <span style="color: var(--host-color);">38 plays</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>3. Levitating</span>
+                                    <span style="color: var(--host-color);">30 plays</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>4. Blinding Lights</span>
+                                    <span style="color: var(--host-color);">25 plays</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- H1: Ρυθμίσεις (Setup) -->
+        <div id="JK_H_SETUP" class="screen" style="align-items: center; justify-content: center;">
+            <div class="card" style="width: 400px; padding: 40px;">
+                <h1>Start Qup Session</h1>
+                
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Session Name</label>
+                <input type="text" class="input-field" value="My Awesome Party">
+                
+                <label style="display: block; margin-bottom: 5px; font-weight: bold; margin-top: 15px;">Filters</label>
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>Allow Explicit Content</span>
+                        <input type="checkbox" checked>
+                    </div>
+                </div>
+
+                <button class="btn btn-host" onclick="navigateTo('JK_H_DASHBOARD')">Start Party</button>
+                <button class="btn" onclick="navigateTo('START')">Back</button>
+            </div>
+        </div>
+
+        <!-- H2: Πίνακας Ελέγχου (Dashboard) -->
+        <div id="JK_H_DASHBOARD" class="screen">
+            <div class="desktop-layout">
+                <!-- Sidebar: Now Playing & Controls -->
+                <div class="sidebar">
+                    <h2 class="brand-logo" style="font-size: 32px; color: var(--host-color); border: none;">
+                        QUp<span class="brand-arrow">↯</span>
+                        <span style="font-size: 14px; opacity: 0.7; margin-left: 10px; font-weight: 400; text-shadow: none;">HOST</span>
+                    </h2>
+                    
+                    <!-- Vibe Meter (Sidebar) -->
+                    <div class="card" style="margin-top: 10px; padding: 15px; text-align: center; border-color: var(--active-green);">
+                         <small style="color: var(--active-green); font-weight: bold; letter-spacing: 1px;">PARTY VIBE</small>
+                         <div class="vibe-meter-container" style="height: 10px; background: #333; border-radius: 5px; margin: 10px 0; overflow: hidden;">
+                             <div id="vibe-bar" style="width: 50%; height: 100%; background: linear-gradient(90deg, #00f3ff, #00ff9d); transition: width 0.5s;"></div>
+                         </div>
+                         <span id="vibe-text" style="font-size: 12px; color: #fff;">Chilling 🧊</span>
+                    </div>
+                                     
+                    <div class="card" style="background: #fdf2f8; border-color: var(--host-color); text-align: center; padding: 30px 10px; margin-top: 20px; color: #1a1a2e;">
+                        <p style="margin-bottom: 15px; font-size: 12px; font-weight: bold; letter-spacing: 1px;">NOW PLAYING</p>
+                        <i class="fa-solid fa-compact-disc fa-spin" style="font-size: 60px; color: #ccc; margin-bottom: 5px; animation-duration: 5s;"></i>
+                        
+                        <!-- Mini Equalizer -->
+                        <div class="equalizer">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                        </div>
+                        <h3 style="font-size: 22px;">Cruel Summer</h3>
+                        <p>Taylor Swift</p>
+                        
+                        <div style="margin-top: 30px; display: flex; justify-content: center; gap: 30px; font-size: 24px;">
+                            <i class="fa-solid fa-backward-step" style="cursor: pointer;"></i>
+                            <i class="fa-solid fa-pause" style="cursor: pointer;"></i>
+                            <i class="fa-solid fa-forward-step" style="cursor: pointer;"></i>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <button class="btn" style="border: 1px solid #ddd;" onclick="toggleEQ(true)">
+                            <i class="fa-solid fa-sliders"></i> Audio Settings
+                        </button>
+                        <button class="btn btn-host" onclick="toggleQR(true)">
+                            <i class="fa-solid fa-qrcode"></i> Show Invite QR
+                        </button>
+                        <button class="btn" style="border-color: red; color: red;" onclick="navigateTo('START')">End Session</button>
+                    </div>
+                </div>
+
+                <!-- Main Content: Queues & Requests -->
+                <div class="main-content">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 100%;">
+                        
+                        <!-- Column 1: Up Next -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h3>Up Next (Queue)</h3>
+                                <button class="btn" style="width: auto; padding: 4px 8px; font-size: 10px; margin: 0;" onclick="clearQueue()">Debug: Clear</button>
+                            </div>
+                            
+                            <!-- Alert: Low Queue -->
+                            <div id="queue-alert" style="display: none; background: #fee2e2; color: #b91c1c; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #fca5a5; font-size: 12px; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span><strong>Queue is empty!</strong> Auto-playlist inactive.</span>
+                                <button class="btn btn-host" style="width: auto; padding: 2px 8px; font-size: 10px; margin: 0; margin-left: auto;" onclick="fillQueue()">Add Playlist</button>
+                            </div>
+
+                            <div id="host-queue-list">
+                                <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                         <strong>Shake It Off</strong> <br> <span style="font-size: 12px; color: #666;">Req by: John</span>
+                                    </div>
+                                    <button class="btn" style="width: auto; padding: 5px 10px; font-size: 12px; color: red; margin: 0;">Skip</button>
+                                </div>
+                                <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                         <strong>Love Story</strong> <br> <span style="font-size: 12px; color: #666;">Req by: Sarah</span>
+                                    </div>
+                                    <button class="btn" style="width: auto; padding: 5px 10px; font-size: 12px; color: red; margin: 0;">Skip</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column 2: Requests -->
+                        <div>
+                            <h3>Incoming Requests</h3>
+                            <!-- Empty State -->
+                            <div id="host-req-empty" class="empty-state">
+                                <i class="fa-solid fa-inbox"></i>
+                                <p>The silence is loud...</p>
+                                <small>No new requests yet</small>
+                            </div>
+                            <!-- Live List -->
+                            <div id="host-req-list" style="display: none;">
+                                <!-- JS will append items here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- QR Modal Overlay -->
+        <div id="qr-modal" onclick="toggleQR(false)">
+            <div class="qr-card" onclick="event.stopPropagation()"> <!-- Stop click from closing when clicking card -->
+                <h2>Join the Qup!</h2>
+                <i class="fa-solid fa-qrcode" style="font-size: 150px; margin: 20px 0; color: #333;"></i>
+                <p>Scan to vote & request</p>
+                <button class="btn btn-host" onclick="toggleQR(false)">Close</button>
+            </div>
+        </div>
+        
+        <!-- Audio Settings / Equalizer Modal -->
+        <div id="eq-modal" onclick="toggleEQ(false)">
+            <div class="qr-card" onclick="event.stopPropagation()" style="width: 350px;">
+                <h2>Audio Settings</h2>
+                
+                <div style="margin: 20px 0; text-align: left;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 8px;">Bass Boost</label>
+                    <input type="range" min="0" max="100" value="70" style="width: 100%;">
+                    
+                    <label style="display: block; font-weight: bold; margin-bottom: 8px; margin-top: 20px;">Mid Tones</label>
+                    <input type="range" min="0" max="100" value="50" style="width: 100%;">
+                    
+                    <label style="display: block; font-weight: bold; margin-bottom: 8px; margin-top: 20px;">Treble / Highs</label>
+                    <input type="range" min="0" max="100" value="60" style="width: 100%;">
+                </div>
+                
+                <p style="font-size: 12px; margin-bottom: 20px;">Adjustments apply to all connected speakers.</p>
+                
+                <button class="btn btn-host" onclick="toggleEQ(false)">Save Settings</button>
+            </div>
+        </div>
+
+        <!-- =========================
+             3. ΡΟΗ ΔΙΑΧΕΙΡΙΣΤΗ (ADMIN FLOW)
+             ========================= -->
+        
+        <div id="JK_A_DASHBOARD" class="screen">
+             <div class="desktop-layout">
+                 <!-- Sidebar -->
+                 <div class="sidebar" style="width: 250px;">
+                    <div style="margin-bottom: 20px;">
+                         <h2 style="color: #333; font-weight: 800; font-size: 28px; margin: 0;">QUp<span class="brand-arrow">↯</span></h2>
+                         <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Admin Panel</small>
+                    </div>
+                     <div style="margin-top: 20px;">
+                         <button class="btn btn-admin"><i class="fa-solid fa-chart-line"></i> Dashboard</button>
+                         <button class="btn"><i class="fa-solid fa-users"></i> Users</button>
+                         <button class="btn"><i class="fa-solid fa-network-wired"></i> API Setup</button>
+                         <button class="btn"><i class="fa-solid fa-server"></i> Server Nodes</button>
+                         <button class="btn"><i class="fa-solid fa-database"></i> API Logs</button>
+                     </div>
+                     <div class="mt-auto">
+                         <button class="btn" style="color: red; border-color: red;" onclick="navigateTo('START')">Logout</button>
+                     </div>
+                 </div>
+
+                 <!-- Main Content -->
+                 <div class="main-content">
+                     <h1>System Overview</h1>
+                     
+                     <!-- Stats Grid -->
+                     <div class="stats-grid">
+                         <div class="stat-box">
+                             <span class="stat-number" style="color: var(--guest-color);">1,240</span>
+                             <small>Active Users</small>
+                         </div>
+                         <div class="stat-box">
+                             <span class="stat-number">42ms</span>
+                             <small>API Latency</small>
+                         </div>
+                         <div class="stat-box">
+                             <span class="stat-number" style="color: var(--host-color);">85</span>
+                             <small>Active Sessions</small>
+                         </div>
+                         <div class="stat-box">
+                             <span class="stat-number text-green">99.9%</span>
+                             <small>Uptime</small>
+                         </div>
+                     </div>
+
+                     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                         <!-- Live Sessions -->
+                         <div>
+                             <h3>Live Sessions Metadata</h3>
+                             <div class="card">
+                                 <table style="width: 100%; text-align: left; font-size: 14px; border-collapse: collapse;">
+                                     <thead>
+                                         <tr style="border-bottom: 2px solid #eee;">
+                                             <th style="padding: 10px;">Session ID</th>
+                                             <th style="padding: 10px;">Host IP</th>
+                                             <th style="padding: 10px;">Users</th>
+                                             <th style="padding: 10px;">Latency</th>
+                                             <th style="padding: 10px;">Status</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+                                         <tr style="border-bottom: 1px solid #eee;">
+                                             <td style="padding: 10px; font-family: monospace;">#SESSION_82A</td>
+                                             <td style="padding: 10px;">192.168.1.15</td>
+                                             <td style="padding: 10px;">14</td>
+                                             <td style="padding: 10px; color: green;">12ms</td>
+                                             <td style="padding: 10px;"><span class="badge bg-green">Active</span></td>
+                                         </tr>
+                                         <tr style="border-bottom: 1px solid #eee;">
+                                             <td style="padding: 10px; font-family: monospace;">#SESSION_99X</td>
+                                             <td style="padding: 10px;">192.168.1.42</td>
+                                             <td style="padding: 10px;">3</td>
+                                             <td style="padding: 10px; color: orange;">145ms</td>
+                                             <td style="padding: 10px;"><span class="badge bg-green">Active</span></td>
+                                         </tr>
+                                         <tr>
+                                             <td style="padding: 10px; font-family: monospace;">#SESSION_B21</td>
+                                             <td style="padding: 10px;">10.0.0.5</td>
+                                             <td style="padding: 10px;">0</td>
+                                             <td style="padding: 10px; color: red;">Timeout</td>
+                                             <td style="padding: 10px;"><span class="badge bg-red">Closed</span></td>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+                             </div>
+                         </div>
+
+                         <!-- Server Logs -->
+                         <div>
+                            <h3>Real-time Logs</h3>
+                            <div class="card" style="background: #1f2937; color: #4ade80; font-family: monospace; font-size: 12px; height: 300px; overflow: hidden; padding: 15px;">
+                                <div style="opacity: 0.7;">[23:42:10] API: GET /songs/search 200 OK</div>
+                                <div style="opacity: 0.8;">[23:42:12] WS: New Connection (Guest #442)</div>
+                                <div style="opacity: 0.9;">[23:42:15] DB: Query took 4ms</div>
+                                <div>[23:42:18] API: POST /vote 201 Created</div>
+                                <div style="color: yellow;">[23:42:19] WARN: High latency on Node 3</div>
+                                <div>[23:42:22] API: GET /session/82A/queue</div>
+                                <div class="cursor-blink">_</div>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+        </div>
+
+        
+        <!-- Toast Container -->
+        <div id="toast-container"></div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
